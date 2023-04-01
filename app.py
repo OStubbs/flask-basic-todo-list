@@ -2,9 +2,14 @@ import json
 from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
-json_file = 'todos.json'
+json_file = 'todos.json' # Alternative could be using sqlite3 for local use.
 
 def read_todos():
+    """Read todo list from json file.
+
+    Returns:
+        list: to do list
+    """
     try:
         with open(json_file, 'r') as f:
             return json.load(f)
@@ -12,6 +17,11 @@ def read_todos():
         return []
 
 def write_todos(todos):
+    """Write list to json, overwritting file contents.
+
+    Args:
+        todos (list): to do list
+    """
     with open(json_file, 'w') as f:
         json.dump(todos, f)
 
@@ -36,4 +46,4 @@ def delete_todo():
     return jsonify({'todos': todos})
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", debug=True)
+    app.run(host="127.0.0.1", debug=True) # Keep local and default port 5000
